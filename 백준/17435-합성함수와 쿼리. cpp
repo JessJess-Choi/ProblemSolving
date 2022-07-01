@@ -1,0 +1,28 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+int dp[20][200001];
+
+int main() {
+    ios::sync_with_stdio(false); cin.tie(NULL);
+    int m; cin >> m;
+    for (int i = 1; i <= m; i++) {
+        cin >> dp[0][i];
+    }
+    for (int i = 1; i < 20; i++)
+        for (int j = 1; j <= m; j++)
+            dp[i][j] = dp[i-1][dp[i-1][j]];
+    int q; cin >> q;
+    for (int i = 0; i < q; i++) {
+        int n, x; cin >> n >> x;
+        for (int j = 0; j < 20; j++) {
+            if (n & (1 << j))
+                x = dp[j][x];
+        }
+        cout << x << "\n";
+    }
+    return 0;
+}
